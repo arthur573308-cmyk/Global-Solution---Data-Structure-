@@ -1,0 +1,174 @@
+from colorama import Fore
+
+# Sistema de Monitoramento Espacial
+# GS Data Structure
+# =========================================
+
+historico = []
+
+# Variáveis principais
+temperatura = 0
+energia = 0
+comunicacao = 1
+
+
+# Função para inserir dados
+# =========================================
+def inserir_dados():
+    global temperatura, energia, comunicacao
+
+    print(Fore.LIGHTBLUE_EX + " CADASTRO DOS SENSORES ")
+
+    global temperatura, energia, comunicacao
+
+    print("=== CADASTRO DOS SENSORES ===")
+
+
+    # Validação da Temperatura
+
+    while True:
+
+        temperatura = float(input(Fore.LIGHTBLUE_EX + "Digite a temperatura da nave: "))
+
+        if temperatura >= 0:
+            break
+
+        else:
+            print(Fore.BLUE + "Valor inválido! Digite uma temperatura positiva.")
+
+
+    # Validação da Energia
+
+    while True:
+
+        energia = int(input(Fore.LIGHTBLUE_EX + "Digite o nível de energia (%): "))
+
+        if 0 <= energia <= 100:
+            break
+
+        else:
+            print(Fore.BLUE + "Digite um valor entre 0 e 100.")
+
+
+    # Validação da Comunicação
+
+    while True:
+
+        comunicacao = int(input(Fore.LIGHTBLUE_EX + "Comunicação ativa? (1 = Sim / 0 = Não): "))
+
+        if comunicacao == 1 or comunicacao == 0:
+            break
+
+        else:
+            print(Fore.BLUE + "Valor inválido! Digite apenas 1 ou 0.")
+
+
+    # Salva os dados no histórico
+    historico.append([temperatura, energia, comunicacao])
+
+    print(Fore.LIGHTBLUE_EX + " Dados registrados com sucesso!")
+
+
+# Função para visualizar status
+# =========================================
+def visualizar_status():
+
+    print(Fore.LIGHTWHITE_EX  + " STATUS ATUAL DA MISSÃO ")
+
+    print(f"Temperatura: {temperatura}°C")
+    print(f"Energia: {energia}%")
+
+
+    if comunicacao == 1:
+        print("Comunicação: OPERANDO")
+    else:
+        print("Comunicação: FALHA")
+
+
+# Função para analisar o sistema
+# =========================================
+def executar_analise():
+
+    print(Fore.GREEN + " ANÁLISE AUTOMÁTICA ")
+
+    alerta = False
+
+    if temperatura > 80:
+        print(Fore.RED + "ALERTA: Superaquecimento detectado!")
+        alerta = True
+
+    if energia < 20:
+        print(Fore.RED + "ALERTA: Economia de energia ativada!")
+        alerta = True
+
+    if comunicacao == 0:
+        print(Fore.RED + "ALERTA: Falha de comunicação!")
+        alerta = True
+
+    if not alerta:
+        print("Todos os sistemas funcionando normalmente.")
+
+
+
+# Função para mostrar histórico
+# =========================================
+def mostrar_historico():
+
+    print(Fore.LIGHTWHITE_EX  + " HISTÓRICO DAS LEITURAS ")
+
+    if len(historico) == 0:
+        print(Fore.LIGHTWHITE_EX  + "Nenhuma leitura cadastrada.")
+
+    else:
+
+        for i, leitura in enumerate(historico):
+
+            print(f"\nLeitura {i+1}")
+
+            print(f"Temperatura: {leitura[0]}°C")
+            print(f"Energia: {leitura[1]}%")
+
+            if leitura[2] == 1:
+                print("Comunicação: OPERANDO")
+            else:
+                print("Comunicação: FALHA")
+
+
+# Menu Principal
+# =========================================
+while True:
+
+    print(Fore.LIGHTBLACK_EX + "=================================")
+    print(" SISTEMA DE MISSÃO ESPACIAL ")
+    print("=================================")
+
+    print(Fore.LIGHTBLUE_EX + "1 - Inserir dados")
+    print(Fore.LIGHTWHITE_EX + "2 - Visualizar status")
+    print(Fore.GREEN + "3 - Executar análise")
+    print(Fore.LIGHTWHITE_EX + "4 - Histórico das leituras")
+    print(Fore.LIGHTRED_EX + "5 - Encerrar sistema")
+
+    opcao = input(Fore.LIGHTGREEN_EX + "Escolha uma opção: ")
+
+  
+    # Opções do Menu
+    # =========================================
+
+    if opcao == "1":
+        inserir_dados()
+
+    elif opcao == "2":
+        visualizar_status()
+
+    elif opcao == "3":
+        executar_analise()
+
+    elif opcao == "4":
+        mostrar_historico()
+
+    elif opcao == "5":
+        print(Fore.LIGHTRED_EX + "Sistema encerrado.")
+        break
+
+    else:
+        print(Fore.LIGHTRED_EX + "Opção inválida!")
